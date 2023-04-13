@@ -1,13 +1,13 @@
 import pandas
 import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
-
-engine = create_engine("postgresql:///?User=postgres&;Password=postgres&Database=MAHAIT&Server=20.219.135.232/&Port=5432")
-
+engine = create_engine('postgresql+psycopg2://postgres:postgres@localhost:5433/MAHAIT')
+print('Engine Joined to Postgres ')
 print(engine)
+df = pandas.read_sql("SELECT id, salary  FROM company", engine)
+df.plot(kind="line", x="id", y="salary", color='blue', title='Rainfall',label="Rainfall", style='-*')
+#plt.figure(figsize=(10, 10))
 
-df = pandas.read_sql("SELECT gid, dist_code  FROM district", engine)
 
-df.plot(kind="bar", x="dist_code", y="gid")
-
+plt.savefig(r'E:/rainfall.png')
 plt.show()
